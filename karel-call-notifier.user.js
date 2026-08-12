@@ -6,8 +6,8 @@
 // @author       ChatGPT
 // @match        https://santral.karel.cloud/*
 // @grant        none
-// @updateURL    https://raw.githubusercontent.com/KULLANICI_ADINIZ/karel/main/karel-call-notifier.user.js
-// @downloadURL  https://raw.githubusercontent.com/KULLANICI_ADINIZ/karel/main/karel-call-notifier.user.js
+// @updateURL    https://raw.githubusercontent.com/kendineselam/karel/main/karel-call-notifier.user.js
+// @downloadURL  https://raw.githubusercontent.com/kendineselam/karel/main/karel-call-notifier.user.js
 // ==/UserScript==
 
 (function () {
