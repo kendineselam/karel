@@ -1,0 +1,6 @@
+{
+  "version": "1",
+  "scripts": [
+    "karel-call-notifier.user.js"
+  ]
+}
