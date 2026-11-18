@@ -1,6 +1,7 @@
 {
-  "version": "1",
+  "version": "2",
   "scripts": [
-    "karel-call-notifier.user.js"
+    "karel-call-notifier.user.js",
+    "yeni-script.user.js"
   ]
 }
