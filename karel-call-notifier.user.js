@@ -2,7 +2,7 @@
 // @name         Karel Santral Çağrı Bildirimi (Popup + Sistem + Ses + Çağrı Geçmişi)
 // @namespace    http://tampermonkey.net/
 // @version      2.3
-// @description  Çağrı geldiğinde ekranın üst-ortasında büyük bir popup, ses ve sistem bildirimi gösterir. Sağ üstte çağrı ikonu ile geçmişi gösterir. Sol üstte yanıp sönen "Dahililere Git" butonu bulunur. Sayfa yenilense bile kayıtlar korunur. Kapat ve Temizle butonları mevcut. Görüşüyor ise ses çalmaz. Çoklu çağrı desteği. Kesinlikle kasmaz!
+// @description  Çağrı geldiğinde ekranın üst-ortasında büyük bir popup, ses ve sistem bildirimi gösterir. Sağ üstte çağrı ikonu ile geçmişi gösterir. Sol üstte "Dahililere Git" butonu bulunur (dahili sayfasında gizlenir). Sayfa yenilense bile kayıtlar korunur. Kapat ve Temizle butonları mevcut. Görüşüyor ise ses çalmaz. Çoklu çağrı desteği. Kesinlikle kasmaz!
 // @author       ChatGPT
 // @match        https://santral.karel.cloud/*
 // @grant        none
@@ -207,20 +207,19 @@
         document.body.appendChild(callIcon);
     }
 
-    // Dahililere Git butonu (sol üst, yanıp söner)
+    // Dahililere Git butonu (sol üst, sabit - dahili sayfasında gizlenir)
+    function isDahiliPage() {
+        return location.pathname.indexOf('/user/internalstatus') !== -1;
+    }
+
+    function updateDahiliButtonVisibility() {
+        const btn = document.getElementById('karel-dahili-btn');
+        if (!btn) return;
+        btn.style.display = isDahiliPage() ? 'none' : 'block';
+    }
+
     function createDahiliButton() {
         if (document.getElementById('karel-dahili-btn')) return;
-
-        // Yanıp sönme animasyonu
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes karelDahiliBlink {
-                0%, 100% { opacity: 1; box-shadow: 0 0 14px rgba(244,67,54,0.9); transform: scale(1); }
-                50%      { opacity: 0.35; box-shadow: 0 0 2px rgba(244,67,54,0.2); transform: scale(0.97); }
-            }
-            #karel-dahili-btn:hover { animation-play-state: paused; opacity: 1 !important; }
-        `;
-        document.head.appendChild(style);
 
         const btn = document.createElement('button');
         btn.id = 'karel-dahili-btn';
@@ -239,7 +238,7 @@
             fontFamily: 'Arial, sans-serif',
             cursor: 'pointer',
             zIndex: 99998,
-            animation: 'karelDahiliBlink 1.2s infinite ease-in-out'
+            boxShadow: '0 4px 12px rgba(0,0,0,0.3)'
         });
 
         btn.onclick = (e) => {
@@ -248,6 +247,7 @@
         };
 
         document.body.appendChild(btn);
+        updateDahiliButtonVisibility();
     }
 
     // Popup göster - optimize edilmiş
@@ -522,8 +522,9 @@
     // Çağrı ikonu
     createCallIcon();
 
-    // Dahililere Git butonu
+    // Dahililere Git butonu (sayfa değişirse görünürlüğü günceller)
     createDahiliButton();
+    setInterval(updateDahiliButtonVisibility, 500);
 
     // Sayfa kapanırken temizlik
     window.addEventListener('beforeunload', function() {
