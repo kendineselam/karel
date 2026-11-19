@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         Karel Santral Çağrı Bildirimi (Popup + Sistem + Ses + Çağrı Geçmişi)
 // @namespace    http://tampermonkey.net/
-// @version      2.1
-// @description  Çağrı geldiğinde ekranın üst-ortasında büyük bir popup, ses ve sistem bildirimi gösterir. Sağ üstte çağrı ikonu ile geçmişi gösterir. Sayfa yenilense bile kayıtlar korunur. Kapat ve Temizle butonları mevcut. Görüşüyor ise ses çalmaz. Çoklu çağrı desteği. Kesinlikle kasmaz!
+// @version      2.2
+// @description  Çağrı geldiğinde ekranın üst-ortasında büyük bir popup, ses ve sistem bildirimi gösterir. Sağ üstte çağrı ikonu ile geçmişi gösterir. Sol üstte yanıp sönen "Dahililere Git" butonu bulunur. Sayfa yenilense bile kayıtlar korunur. Kapat ve Temizle butonları mevcut. Görüşüyor ise ses çalmaz. Çoklu çağrı desteği. Kesinlikle kasmaz!
 // @author       ChatGPT
 // @match        https://santral.karel.cloud/*
 // @grant        none
@@ -205,6 +205,49 @@
         };
 
         document.body.appendChild(callIcon);
+    }
+
+    // Dahililere Git butonu (sol üst, yanıp söner)
+    function createDahiliButton() {
+        if (document.getElementById('karel-dahili-btn')) return;
+
+        // Yanıp sönme animasyonu
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes karelDahiliBlink {
+                0%, 100% { opacity: 1; box-shadow: 0 0 14px rgba(244,67,54,0.9); transform: scale(1); }
+                50%      { opacity: 0.35; box-shadow: 0 0 2px rgba(244,67,54,0.2); transform: scale(0.97); }
+            }
+            #karel-dahili-btn:hover { animation-play-state: paused; opacity: 1 !important; }
+        `;
+        document.head.appendChild(style);
+
+        const btn = document.createElement('button');
+        btn.id = 'karel-dahili-btn';
+        btn.textContent = '📋 Dahililere Git';
+        Object.assign(btn.style, {
+            position: 'fixed',
+            top: '10px',
+            left: '10px',
+            padding: '10px 18px',
+            backgroundColor: '#f44336',
+            color: '#fff',
+            border: '2px solid #fff',
+            borderRadius: '10px',
+            fontSize: '15px',
+            fontWeight: 'bold',
+            fontFamily: 'Arial, sans-serif',
+            cursor: 'pointer',
+            zIndex: 99998,
+            animation: 'karelDahiliBlink 1.2s infinite ease-in-out'
+        });
+
+        btn.onclick = (e) => {
+            e.stopPropagation();
+            window.location.href = 'https://santral.karel.cloud/user/internalstatus';
+        };
+
+        document.body.appendChild(btn);
     }
 
     // Popup göster - optimize edilmiş
@@ -478,6 +521,9 @@
 
     // Çağrı ikonu
     createCallIcon();
+
+    // Dahililere Git butonu
+    createDahiliButton();
 
     // Sayfa kapanırken temizlik
     window.addEventListener('beforeunload', function() {
