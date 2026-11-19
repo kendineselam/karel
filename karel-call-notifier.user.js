@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Karel Santral Çağrı Bildirimi (Popup + Sistem + Ses + Çağrı Geçmişi)
 // @namespace    http://tampermonkey.net/
-// @version      2.3
+// @version      2.4
 // @description  Çağrı geldiğinde ekranın üst-ortasında büyük bir popup, ses ve sistem bildirimi gösterir. Sağ üstte çağrı ikonu ile geçmişi gösterir. Sol üstte "Dahililere Git" butonu bulunur (dahili sayfasında gizlenir). Sayfa yenilense bile kayıtlar korunur. Kapat ve Temizle butonları mevcut. Görüşüyor ise ses çalmaz. Çoklu çağrı desteği. Kesinlikle kasmaz!
 // @author       ChatGPT
 // @match        https://santral.karel.cloud/*
