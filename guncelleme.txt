@@ -3,6 +3,6 @@
 # program = programin kendisinin surumu (karelsistem.zip degisince bu sayiyi artir)
 # script  = scriptlerin surumu (script ekleyince / degistirince bu sayiyi artir)
 # altta   = indirilecek script dosyalari, her satira bir tane
-program=10
+program=7
 script=4
 karel-call-notifier.user.js
