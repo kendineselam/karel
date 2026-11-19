@@ -1,0 +1,2 @@
+Sol üst tarafa "Dahililere Git" butonu eklendi (dahili sayfasındayken görünmez)
+
